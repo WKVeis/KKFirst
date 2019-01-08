@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<!-- saved from url=(0079)file:///C:/Users/Administrator/Documents/WeChat%20Files/KX5619/Files/index.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  <title>简单倒计时</title> 
+        <style>
+          
+		<style>
+	html,body{margin:0;padding: 0;width: 100%;height: 100%;}
+	body{background: #ef4036;color: #fff;}
+	.main{
+		display: -webkit-box;
+	    display: -ms-flexbox;
+	    display: -webkit-flex;
+	    display: flex;
+	    -webkit-box-pack: center;
+	    -ms-flex-pack: center;
+	    -webkit-justify-content: center;
+	    justify-content: center;
+	    -webkit-box-align: center;
+	    -ms-flex-align: center;
+	    -webkit-align-items: center;
+	    align-items: center;
+	    height: 100%;
+	}
+	.warp{
+		width: 670px;
+		margin: 0 auto;
+		text-align: center;
+		font-size: 36px;
+		font-family: "微软雅黑";
+		font-weight: 30;
+		overflow: hidden;
+	}
+	
+	.divCenter{
+    text-align: center; /*让div内部文字居中*/
+}
+	
+	.bt{text-align: center;margin-top: 60px;}
+	.bt span{display: inline-block;padding: 30px 60px;border-radius: 5px;cursor: pointer;background: #000;margin: 0 35px;font-size: 20px;width: 150px;text-align: center;}
+	.bt span.end{background: #ffb200;}
+	.bt font{display: inline-block;width: 20px;}
+</style>
+        
+<script type="text/javascript" src="file:///C:/Users/Administrator/Documents/WeChat%20Files/KX5619/Files/js/jquery-1.8.3.min.js"></script>		
+		<script>
+
+
+            var game_time;//总时长
+            var game_start;//开始时间
+            var djs_span;//显示倒计时
+            var id;//计时器id
+            var game_djs;//倒计时
+            var isZT = false;//判断是否为暂停，false表示未点击暂停
+            var zt_time;//暂停时的倒计时值
+            var jx_id;//继续倒计时的倒计时id
+            var startBtn;//倒计时开始按钮
+
+            window.onload = function(){
+
+                djs_span = document.getElementById("djs");
+                //暂停倒计时
+                var zt = document.getElementById("zt");
+                //倒计时开始
+                startBtn = document.getElementById("btn");
+
+                startBtn.onclick = function(){
+
+                    clearTimeout(jx_id);
+
+                    if(isZT){
+                        var reset = confirm("您当前倒计时正在进行中，确定要重新开始吗？");
+                        if(reset){
+                            zt.textContent = "暂停";
+                            isZT = false;
+                        }else{
+                            return;
+                        }
+                    }
+
+                    //获取倒计时总时长
+                    game_time = document.getElementById("time").value*60;
+                    //记录倒计时开始时间
+                    game_start = new Date();
+                    //禁用开始按钮
+                    startBtn.disabled = true;
+                    djs();
+                }
+
+                //停止游戏
+                document.getElementById("stop").onclick = function(){
+                    game_stop();
+                    //还原开始按钮
+                    startBtn.disabled = false;
+                }
+
+                zt.onclick = function(){
+                    game_zt();
+                    if(isZT){
+                        //点击继续按钮
+                        zt.textContent = "暂停倒计时";
+                        isZT = false;
+                        //禁用开始按钮
+                        startBtn.disabled = true;
+                        //记录开始时间
+                        game_start = new Date();
+                        game_jx();
+                    }else{
+                        //点击暂停按钮
+                        zt.textContent = "倒计时继续";
+                        isZT = true;
+                        //还原开始按钮
+                        startBtn.disabled = false;
+                        //记录暂停时间
+                        zt_time = game_djs;
+                        game_zt();
+                    }
+                }
+            }
+
+
+            //倒计时方法
+            function djs(){
+
+                //获取倒计时进行时
+                var playing = new Date();
+
+                game_djs = game_time - parseInt((playing - game_start)/1000);
+
+                djs_span.innerHTML = game_djs;
+
+                id = setTimeout("djs()",1000);//步长
+
+                //倒计时结束
+                if(game_djs<1){
+                    clearTimeout(id);
+                    alert("倒计时结束");
+                }
+
+            }
+
+            //暂停倒计时
+            function game_zt(){
+                clearTimeout(id);
+                clearTimeout(jx_id);
+            }
+
+            //继续游戏
+            function game_jx(){
+                //获取倒计时
+                var playing = new Date();
+
+                game_djs = zt_time - parseInt((playing - game_start)/1000);
+
+                djs_span.innerHTML = game_djs;
+
+                jx_id = setTimeout("game_jx()",1000);//步长
+
+                //倒计时结束
+                if(game_djs<1){
+                    clearTimeout(jx_id);
+                    alert("倒计时结束");
+                }
+            }
+
+            //游戏结束
+            function game_stop(){
+                clearTimeout(id);
+                clearTimeout(jx_id);
+                game_djs = 0;
+                djs_span.innerHTML = game_djs;
+            }
+
+        </script> </head> 
+		<body> 
+		
+		<!--<div style="width:100%;">-->
+		
+		<div class="">
+			<div class="warp">
+			<span style="font-size:20px"> 倒计时总时长<input id="time" value="1" style="width:20px"><span>分钟
+			</span></span></div>
+		</div>
+		
+		<div class="divCenter">
+			   <font size="9" color="black">剩余时间 ：</font><span id="djs" text-align:="" center=""></span><font size="9" color="black">秒</font>
+		</div>
+			
+	   <div class="bt">
+			    <span>
+				   <button id="btn">开始</button>
+				</span>
+				
+			    <span>
+				    <button id="zt">暂停</button>
+				</span>
+				
+			    <span>
+				    <button id="stop">停止</button> 
+				</span>
+	   </div>
+	  <!-- </div>-->
+		 
+		</body></html>
