@@ -1,0 +1,1015 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wkxf.mapper.ContrastRecordMapper">
+  <resultMap id="BaseResultMap" type="com.wkxf.pojo.ContrastRecord">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="trans_id" jdbcType="VARCHAR" property="transId" />
+    <result column="id_card_no" jdbcType="VARCHAR" property="idCardNo" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="contrast_similarity" jdbcType="DECIMAL" property="contrastSimilarity" />
+    <result column="call_from" jdbcType="VARCHAR" property="callFrom" />
+    <result column="recognition_source" jdbcType="VARCHAR" property="recognitionSource" />
+    <result column="trans_time" jdbcType="TIMESTAMP" property="transTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.wkxf.pojo.ContrastRecord">
+    <result column="pic_base64" jdbcType="LONGVARCHAR" property="picBase64" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, trans_id, id_card_no, name, contrast_similarity, call_from, recognition_source, 
+    trans_time, create_time
+  </sql>
+  <sql id="Blob_Column_List">
+    pic_base64
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.wkxf.pojo.ContrastRecordExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from contrast_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.wkxf.pojo.ContrastRecordExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from contrast_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from contrast_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from contrast_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.wkxf.pojo.ContrastRecordExample">
+    delete from contrast_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.wkxf.pojo.ContrastRecord">
+    insert into contrast_record (id, trans_id, id_card_no, 
+      name, contrast_similarity, call_from, 
+      recognition_source, trans_time, create_time, 
+      pic_base64)
+    values (#{id,jdbcType=INTEGER}, #{transId,jdbcType=VARCHAR}, #{idCardNo,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{contrastSimilarity,jdbcType=DECIMAL}, #{callFrom,jdbcType=VARCHAR}, 
+      #{recognitionSource,jdbcType=VARCHAR}, #{transTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{picBase64,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wkxf.pojo.ContrastRecord">
+    insert into contrast_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="transId != null">
+        trans_id,
+      </if>
+      <if test="idCardNo != null">
+        id_card_no,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="contrastSimilarity != null">
+        contrast_similarity,
+      </if>
+      <if test="callFrom != null">
+        call_from,
+      </if>
+      <if test="recognitionSource != null">
+        recognition_source,
+      </if>
+      <if test="transTime != null">
+        trans_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="picBase64 != null">
+        pic_base64,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="transId != null">
+        #{transId,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardNo != null">
+        #{idCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="contrastSimilarity != null">
+        #{contrastSimilarity,jdbcType=DECIMAL},
+      </if>
+      <if test="callFrom != null">
+        #{callFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="recognitionSource != null">
+        #{recognitionSource,jdbcType=VARCHAR},
+      </if>
+      <if test="transTime != null">
+        #{transTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="picBase64 != null">
+        #{picBase64,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.wkxf.pojo.ContrastRecordExample" resultType="java.lang.Long">
+    select count(*) from contrast_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update contrast_record
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.transId != null">
+        trans_id = #{record.transId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idCardNo != null">
+        id_card_no = #{record.idCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contrastSimilarity != null">
+        contrast_similarity = #{record.contrastSimilarity,jdbcType=DECIMAL},
+      </if>
+      <if test="record.callFrom != null">
+        call_from = #{record.callFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recognitionSource != null">
+        recognition_source = #{record.recognitionSource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transTime != null">
+        trans_time = #{record.transTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.picBase64 != null">
+        pic_base64 = #{record.picBase64,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update contrast_record
+    set id = #{record.id,jdbcType=INTEGER},
+      trans_id = #{record.transId,jdbcType=VARCHAR},
+      id_card_no = #{record.idCardNo,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      contrast_similarity = #{record.contrastSimilarity,jdbcType=DECIMAL},
+      call_from = #{record.callFrom,jdbcType=VARCHAR},
+      recognition_source = #{record.recognitionSource,jdbcType=VARCHAR},
+      trans_time = #{record.transTime,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      pic_base64 = #{record.picBase64,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update contrast_record
+    set id = #{record.id,jdbcType=INTEGER},
+      trans_id = #{record.transId,jdbcType=VARCHAR},
+      id_card_no = #{record.idCardNo,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      contrast_similarity = #{record.contrastSimilarity,jdbcType=DECIMAL},
+      call_from = #{record.callFrom,jdbcType=VARCHAR},
+      recognition_source = #{record.recognitionSource,jdbcType=VARCHAR},
+      trans_time = #{record.transTime,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wkxf.pojo.ContrastRecord">
+    update contrast_record
+    <set>
+      <if test="transId != null">
+        trans_id = #{transId,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardNo != null">
+        id_card_no = #{idCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="contrastSimilarity != null">
+        contrast_similarity = #{contrastSimilarity,jdbcType=DECIMAL},
+      </if>
+      <if test="callFrom != null">
+        call_from = #{callFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="recognitionSource != null">
+        recognition_source = #{recognitionSource,jdbcType=VARCHAR},
+      </if>
+      <if test="transTime != null">
+        trans_time = #{transTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="picBase64 != null">
+        pic_base64 = #{picBase64,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wkxf.pojo.ContrastRecord">
+    update contrast_record
+    set trans_id = #{transId,jdbcType=VARCHAR},
+      id_card_no = #{idCardNo,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      contrast_similarity = #{contrastSimilarity,jdbcType=DECIMAL},
+      call_from = #{callFrom,jdbcType=VARCHAR},
+      recognition_source = #{recognitionSource,jdbcType=VARCHAR},
+      trans_time = #{transTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      pic_base64 = #{picBase64,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wkxf.pojo.ContrastRecord">
+    update contrast_record
+    set trans_id = #{transId,jdbcType=VARCHAR},
+      id_card_no = #{idCardNo,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      contrast_similarity = #{contrastSimilarity,jdbcType=DECIMAL},
+      call_from = #{callFrom,jdbcType=VARCHAR},
+      recognition_source = #{recognitionSource,jdbcType=VARCHAR},
+      trans_time = #{transTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.wkxf.pojo.ContrastRecord">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="trans_id" jdbcType="VARCHAR" property="transId" />
+    <result column="id_card_no" jdbcType="VARCHAR" property="idCardNo" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="contrast_similarity" jdbcType="DECIMAL" property="contrastSimilarity" />
+    <result column="call_from" jdbcType="VARCHAR" property="callFrom" />
+    <result column="recognition_source" jdbcType="VARCHAR" property="recognitionSource" />
+    <result column="trans_time" jdbcType="TIMESTAMP" property="transTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.wkxf.pojo.ContrastRecord">
+    <result column="pic_base64" jdbcType="LONGVARCHAR" property="picBase64" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, trans_id, id_card_no, name, contrast_similarity, call_from, recognition_source, 
+    trans_time, create_time
+  </sql>
+  <sql id="Blob_Column_List">
+    pic_base64
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.wkxf.pojo.ContrastRecordExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from contrast_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.wkxf.pojo.ContrastRecordExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from contrast_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from contrast_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from contrast_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.wkxf.pojo.ContrastRecordExample">
+    delete from contrast_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.wkxf.pojo.ContrastRecord">
+    insert into contrast_record (id, trans_id, id_card_no, 
+      name, contrast_similarity, call_from, 
+      recognition_source, trans_time, create_time, 
+      pic_base64)
+    values (#{id,jdbcType=INTEGER}, #{transId,jdbcType=VARCHAR}, #{idCardNo,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{contrastSimilarity,jdbcType=DECIMAL}, #{callFrom,jdbcType=VARCHAR}, 
+      #{recognitionSource,jdbcType=VARCHAR}, #{transTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{picBase64,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wkxf.pojo.ContrastRecord">
+    insert into contrast_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="transId != null">
+        trans_id,
+      </if>
+      <if test="idCardNo != null">
+        id_card_no,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="contrastSimilarity != null">
+        contrast_similarity,
+      </if>
+      <if test="callFrom != null">
+        call_from,
+      </if>
+      <if test="recognitionSource != null">
+        recognition_source,
+      </if>
+      <if test="transTime != null">
+        trans_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="picBase64 != null">
+        pic_base64,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="transId != null">
+        #{transId,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardNo != null">
+        #{idCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="contrastSimilarity != null">
+        #{contrastSimilarity,jdbcType=DECIMAL},
+      </if>
+      <if test="callFrom != null">
+        #{callFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="recognitionSource != null">
+        #{recognitionSource,jdbcType=VARCHAR},
+      </if>
+      <if test="transTime != null">
+        #{transTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="picBase64 != null">
+        #{picBase64,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.wkxf.pojo.ContrastRecordExample" resultType="java.lang.Long">
+    select count(*) from contrast_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update contrast_record
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.transId != null">
+        trans_id = #{record.transId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idCardNo != null">
+        id_card_no = #{record.idCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contrastSimilarity != null">
+        contrast_similarity = #{record.contrastSimilarity,jdbcType=DECIMAL},
+      </if>
+      <if test="record.callFrom != null">
+        call_from = #{record.callFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recognitionSource != null">
+        recognition_source = #{record.recognitionSource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transTime != null">
+        trans_time = #{record.transTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.picBase64 != null">
+        pic_base64 = #{record.picBase64,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update contrast_record
+    set id = #{record.id,jdbcType=INTEGER},
+      trans_id = #{record.transId,jdbcType=VARCHAR},
+      id_card_no = #{record.idCardNo,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      contrast_similarity = #{record.contrastSimilarity,jdbcType=DECIMAL},
+      call_from = #{record.callFrom,jdbcType=VARCHAR},
+      recognition_source = #{record.recognitionSource,jdbcType=VARCHAR},
+      trans_time = #{record.transTime,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      pic_base64 = #{record.picBase64,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update contrast_record
+    set id = #{record.id,jdbcType=INTEGER},
+      trans_id = #{record.transId,jdbcType=VARCHAR},
+      id_card_no = #{record.idCardNo,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      contrast_similarity = #{record.contrastSimilarity,jdbcType=DECIMAL},
+      call_from = #{record.callFrom,jdbcType=VARCHAR},
+      recognition_source = #{record.recognitionSource,jdbcType=VARCHAR},
+      trans_time = #{record.transTime,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wkxf.pojo.ContrastRecord">
+    update contrast_record
+    <set>
+      <if test="transId != null">
+        trans_id = #{transId,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardNo != null">
+        id_card_no = #{idCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="contrastSimilarity != null">
+        contrast_similarity = #{contrastSimilarity,jdbcType=DECIMAL},
+      </if>
+      <if test="callFrom != null">
+        call_from = #{callFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="recognitionSource != null">
+        recognition_source = #{recognitionSource,jdbcType=VARCHAR},
+      </if>
+      <if test="transTime != null">
+        trans_time = #{transTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="picBase64 != null">
+        pic_base64 = #{picBase64,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wkxf.pojo.ContrastRecord">
+    update contrast_record
+    set trans_id = #{transId,jdbcType=VARCHAR},
+      id_card_no = #{idCardNo,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      contrast_similarity = #{contrastSimilarity,jdbcType=DECIMAL},
+      call_from = #{callFrom,jdbcType=VARCHAR},
+      recognition_source = #{recognitionSource,jdbcType=VARCHAR},
+      trans_time = #{transTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      pic_base64 = #{picBase64,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wkxf.pojo.ContrastRecord">
+    update contrast_record
+    set trans_id = #{transId,jdbcType=VARCHAR},
+      id_card_no = #{idCardNo,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      contrast_similarity = #{contrastSimilarity,jdbcType=DECIMAL},
+      call_from = #{callFrom,jdbcType=VARCHAR},
+      recognition_source = #{recognitionSource,jdbcType=VARCHAR},
+      trans_time = #{transTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.wkxf.pojo.ContrastRecord">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="trans_id" jdbcType="VARCHAR" property="transId" />
+    <result column="id_card_no" jdbcType="VARCHAR" property="idCardNo" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="contrast_similarity" jdbcType="DECIMAL" property="contrastSimilarity" />
+    <result column="call_from" jdbcType="VARCHAR" property="callFrom" />
+    <result column="recognition_source" jdbcType="VARCHAR" property="recognitionSource" />
+    <result column="trans_time" jdbcType="TIMESTAMP" property="transTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.wkxf.pojo.ContrastRecord">
+    <result column="pic_base64" jdbcType="LONGVARCHAR" property="picBase64" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, trans_id, id_card_no, name, contrast_similarity, call_from, recognition_source, 
+    trans_time, create_time
+  </sql>
+  <sql id="Blob_Column_List">
+    pic_base64
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.wkxf.pojo.ContrastRecordExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from contrast_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.wkxf.pojo.ContrastRecordExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from contrast_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from contrast_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from contrast_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.wkxf.pojo.ContrastRecordExample">
+    delete from contrast_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.wkxf.pojo.ContrastRecord">
+    insert into contrast_record (id, trans_id, id_card_no, 
+      name, contrast_similarity, call_from, 
+      recognition_source, trans_time, create_time, 
+      pic_base64)
+    values (#{id,jdbcType=INTEGER}, #{transId,jdbcType=VARCHAR}, #{idCardNo,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{contrastSimilarity,jdbcType=DECIMAL}, #{callFrom,jdbcType=VARCHAR}, 
+      #{recognitionSource,jdbcType=VARCHAR}, #{transTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{picBase64,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wkxf.pojo.ContrastRecord">
+    insert into contrast_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="transId != null">
+        trans_id,
+      </if>
+      <if test="idCardNo != null">
+        id_card_no,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="contrastSimilarity != null">
+        contrast_similarity,
+      </if>
+      <if test="callFrom != null">
+        call_from,
+      </if>
+      <if test="recognitionSource != null">
+        recognition_source,
+      </if>
+      <if test="transTime != null">
+        trans_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="picBase64 != null">
+        pic_base64,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="transId != null">
+        #{transId,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardNo != null">
+        #{idCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="contrastSimilarity != null">
+        #{contrastSimilarity,jdbcType=DECIMAL},
+      </if>
+      <if test="callFrom != null">
+        #{callFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="recognitionSource != null">
+        #{recognitionSource,jdbcType=VARCHAR},
+      </if>
+      <if test="transTime != null">
+        #{transTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="picBase64 != null">
+        #{picBase64,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.wkxf.pojo.ContrastRecordExample" resultType="java.lang.Long">
+    select count(*) from contrast_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update contrast_record
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.transId != null">
+        trans_id = #{record.transId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idCardNo != null">
+        id_card_no = #{record.idCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contrastSimilarity != null">
+        contrast_similarity = #{record.contrastSimilarity,jdbcType=DECIMAL},
+      </if>
+      <if test="record.callFrom != null">
+        call_from = #{record.callFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recognitionSource != null">
+        recognition_source = #{record.recognitionSource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transTime != null">
+        trans_time = #{record.transTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.picBase64 != null">
+        pic_base64 = #{record.picBase64,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update contrast_record
+    set id = #{record.id,jdbcType=INTEGER},
+      trans_id = #{record.transId,jdbcType=VARCHAR},
+      id_card_no = #{record.idCardNo,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      contrast_similarity = #{record.contrastSimilarity,jdbcType=DECIMAL},
+      call_from = #{record.callFrom,jdbcType=VARCHAR},
+      recognition_source = #{record.recognitionSource,jdbcType=VARCHAR},
+      trans_time = #{record.transTime,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      pic_base64 = #{record.picBase64,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update contrast_record
+    set id = #{record.id,jdbcType=INTEGER},
+      trans_id = #{record.transId,jdbcType=VARCHAR},
+      id_card_no = #{record.idCardNo,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      contrast_similarity = #{record.contrastSimilarity,jdbcType=DECIMAL},
+      call_from = #{record.callFrom,jdbcType=VARCHAR},
+      recognition_source = #{record.recognitionSource,jdbcType=VARCHAR},
+      trans_time = #{record.transTime,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wkxf.pojo.ContrastRecord">
+    update contrast_record
+    <set>
+      <if test="transId != null">
+        trans_id = #{transId,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardNo != null">
+        id_card_no = #{idCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="contrastSimilarity != null">
+        contrast_similarity = #{contrastSimilarity,jdbcType=DECIMAL},
+      </if>
+      <if test="callFrom != null">
+        call_from = #{callFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="recognitionSource != null">
+        recognition_source = #{recognitionSource,jdbcType=VARCHAR},
+      </if>
+      <if test="transTime != null">
+        trans_time = #{transTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="picBase64 != null">
+        pic_base64 = #{picBase64,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wkxf.pojo.ContrastRecord">
+    update contrast_record
+    set trans_id = #{transId,jdbcType=VARCHAR},
+      id_card_no = #{idCardNo,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      contrast_similarity = #{contrastSimilarity,jdbcType=DECIMAL},
+      call_from = #{callFrom,jdbcType=VARCHAR},
+      recognition_source = #{recognitionSource,jdbcType=VARCHAR},
+      trans_time = #{transTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      pic_base64 = #{picBase64,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wkxf.pojo.ContrastRecord">
+    update contrast_record
+    set trans_id = #{transId,jdbcType=VARCHAR},
+      id_card_no = #{idCardNo,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      contrast_similarity = #{contrastSimilarity,jdbcType=DECIMAL},
+      call_from = #{callFrom,jdbcType=VARCHAR},
+      recognition_source = #{recognitionSource,jdbcType=VARCHAR},
+      trans_time = #{transTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
