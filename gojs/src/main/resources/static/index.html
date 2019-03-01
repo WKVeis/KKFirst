@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gojs/1.8.25/go-debug.js"></script>
+</head>
+<body>
+<h1>响应式图表尝鲜007</h1>
+<div id="myDiagramDiv"
+     style="width:1000px; height:1000px; background-color: #DAE4E4;"></div>
+<script type="text/javascript">
+    var $ = go.GraphObject.make;
+    var myDiagram =
+            $(go.Diagram, "myDiagramDiv",
+                    {
+                        "undoManager.isEnabled": true // enable Ctrl-Z to undo and Ctrl-Y to redo
+                    });
+
+    var myModel = $(go.Model);
+    // in the model data, each node is represented by a JavaScript object:
+    myModel.nodeDataArray = [
+        { key: "Alpha" },
+        { key: "Beta" },
+        { key: "Gamma" }
+    ];
+    myDiagram.model = myModel;
+
+
+</script>
+</body>
+</html>
